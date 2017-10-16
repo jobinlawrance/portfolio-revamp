@@ -15,6 +15,8 @@ var
     rev = require('gulp-rev'),
     revReplace = require('gulp-rev-replace'),
     revdel = require('gulp-rev-delete-original'),
+    fontmin = require('gulp-fontmin'),
+    gutil = require('gulp-util'),
 
     // development mode?
     devBuild = (process.env.NODE_ENV !== 'production'),
@@ -27,9 +29,9 @@ var
 
 // image processing
 gulp.task('images', function () {
-    var out = folder.build + 'images/';
+    var out = folder.build + 'static/';
 
-    return gulp.src(folder.src + 'images/**/*')
+    return gulp.src(folder.src + 'static/**/*')
         .pipe(newer(out))
         .pipe(imagemin({ optimizationLevel: 5 }))
         .pipe(gulp.dest(out));
@@ -41,12 +43,12 @@ gulp.task('html', function () {
 
     return gulp.src(folder.src + '*.html')
         .pipe(newer(out))
-        // .pipe(htmlclean())
+        .pipe(devBuild ? gutil.noop() : htmlclean())
         .pipe(gulp.dest(out));
 });
 
 // CSS processing
-gulp.task('css', ['images', 'html'], function () {
+gulp.task('css', function () {
 
     var postCssOpts = [
         // assets({ loadPaths: ['images/'] }),
@@ -71,7 +73,7 @@ gulp.task('css', ['images', 'html'], function () {
 
 });
 
-gulp.task('revision', ['css'], function () {
+gulp.task('revision', function () {
     return gulp.src([folder.build + "**/*.css"])
         .pipe(rev())
         .pipe(revdel())
@@ -80,10 +82,20 @@ gulp.task('revision', ['css'], function () {
         .pipe(gulp.dest(folder.build))
 });
 
-gulp.task("revreplace", ['revision'], function () {
+gulp.task("revreplace", function () {
     var manifest = gulp.src("./" + folder.build + "/rev-manifest.json");
 
     return gulp.src(folder.build + "/index.html")
         .pipe(revReplace({ manifest: manifest }))
         .pipe(gulp.dest(folder.build));
 });
+
+gulp.task('fontmin', function () {
+    return gulp.src(folder.src + 'font/*.ttf')
+        .pipe(fontmin())
+        .pipe(gulp.dest(folder.build + 'fonts'));
+});
+
+gulp.task('run',['fontmin','images', 'html','css','revision','revreplace'])
+
+gulp.task('default',['run']);

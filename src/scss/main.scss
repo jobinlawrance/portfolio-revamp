@@ -1,5 +1,93 @@
-$primary-color: #333;
+@import 'variables.scss';
+@import "bulma";
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
-body {
-    color: $primary-color;
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $background-blue;
+  overflow-x: hidden; 
+  overflow-y: auto; 
+  text-rendering: optimizeLegibility;
+}
+
+.hero {
+  background-color: $background-blue;
+  text-align: center;
+  font-family: OCR-B-10 BT;
+  .title {
+    color: $white;
+    text-transform: uppercase;
   }
+  .subtitle {
+    color: $yellow
+  }
+  a:hover,
+  a:active {
+    color: $yellow;
+  }
+}
+
+// a:link,
+// a:visited{
+// }
+#work {
+  text-align: center;
+  font-family: OCR-B-10 BT;
+  .title {
+    color: $white;
+    margin-bottom: 15px;
+  }
+  .section {
+    background-color: $background-blue;
+  }
+  .work-tag {
+    background-color: $yellow;
+    color: black;
+    border-radius: 3px;
+    padding: 5px 5px;
+    font-size: .7em;
+  }
+  .subtitle {
+    color: $grey;
+    max-width: 586px;
+    margin:15px auto;
+  }
+  .link {
+    margin-top: -10px;
+  }
+  a:hover,
+  a:active {
+    color: $yellow;
+  }
+}
+
+#contact {
+  text-align: center;
+  font-family: OCR-B-10 BT;
+  .container {
+    padding: 20px;
+    .title {
+      margin-bottom: 10px;
+    }
+  }
+  .section {
+    background-color: $background-blue;
+  }
+  .title {
+    color: $white;
+    margin-bottom: 5px;
+  }
+  a:hover,
+  a:active {
+    color: $yellow;
+  }
+  .fa {
+    font-size: 0.8em;
+    color: $grey;
+  }
+}
+
+// #work .title {
+//   color: $white;
+// }
