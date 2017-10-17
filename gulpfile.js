@@ -73,7 +73,7 @@ gulp.task('css', function () {
 
 });
 
-gulp.task('revision', function () {
+gulp.task('revision', ['css'], function () {
     return gulp.src([folder.build + "**/*.css"])
         .pipe(rev())
         .pipe(revdel())
@@ -82,7 +82,7 @@ gulp.task('revision', function () {
         .pipe(gulp.dest(folder.build))
 });
 
-gulp.task("revreplace", function () {
+gulp.task("revreplace", ['revision'], function () {
     var manifest = gulp.src("./" + folder.build + "/rev-manifest.json");
 
     return gulp.src(folder.build + "/index.html")
@@ -96,6 +96,6 @@ gulp.task('fontmin', function () {
         .pipe(gulp.dest(folder.build + 'fonts'));
 });
 
-gulp.task('run',['fontmin','images', 'html','css','revision','revreplace'])
+gulp.task('run', ['fontmin', 'images', 'html', 'css', 'revision', 'revreplace'])
 
-gulp.task('default',['run']);
+gulp.task('default', ['run']);

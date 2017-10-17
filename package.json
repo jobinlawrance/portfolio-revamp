@@ -2,9 +2,10 @@
   "name": "website-portfolio",
   "version": "1.0.0",
   "description": "Personal portfolio website",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "export NODE_ENV=debug && gulp",
+    "build": "export NODE_ENV=production && gulp"
   },
   "author": "Jobin Lawrance",
   "license": "MIT",
